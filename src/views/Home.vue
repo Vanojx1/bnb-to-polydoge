@@ -64,7 +64,7 @@
           class="mb-12"
           height="860px"
         >
-          <iframe width="100%" height="100%" seamless src="https://app.elk.finance/#/swap?inputCurrency=BNB&outputCurrency=ELK"></iframe>
+          <iframe v-if="polydogeStepper == 3" ref="bnbElk" width="100%" height="100%" seamless src="https://app.elk.finance/#/swap?inputCurrency=BNB&outputCurrency=ELK"></iframe>
         </v-card>
         <v-btn
           color="primary"
@@ -94,7 +94,7 @@
           class="mb-12"
           height="1100px"
         >
-          <iframe width="100%" height="100%" seamless src="https://app.elk.finance/#/elknet"></iframe>
+          <iframe v-if="polydogeStepper == 4" width="100%" height="100%" seamless src="https://app.elk.finance/#/elknet"></iframe>
         </v-card>
         <v-btn
           color="primary"
@@ -146,7 +146,7 @@
           class="mb-12"
           height="860px"
         >
-          <iframe width="100%" height="100%" seamless src="https://app.elk.finance/#/swap?inputCurrency=ELK&outputCurrency=0x8A953CfE442c5E8855cc6c61b1293FA648BAE472"></iframe>
+          <iframe v-if="polydogeStepper == 6" width="100%" height="100%" seamless src="https://app.elk.finance/#/swap?inputCurrency=ELK&outputCurrency=0x8A953CfE442c5E8855cc6c61b1293FA648BAE472"></iframe>
         </v-card>
         <v-btn
           text
@@ -204,13 +204,8 @@ export default {
       this.addNetwork(network);
     },
     async addNetwork(network) {
-      console.log('==>', network);
       this.loadingStatus[network.nativeCurrency.name] = true;
-      const result = await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [network] });
-      // .then(() => console.log('Success'))
-      // .catch((error) => console.log('Error', error.message));
-      console.log(result);
-
+      await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [network] });
       this.loadingStatus[network.nativeCurrency.name] = false;
     },
   },
