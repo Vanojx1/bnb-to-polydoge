@@ -16,13 +16,13 @@
           class="ma-2"
           :loading="!!loadingStatus.BSC"
           :disabled="!!loadingStatus.BSC"
-          color="secondary"
+          color="primary"
           @click="addBsc"
         >
-          Add BSC to Metamask
+          Add BSC to Metamask ( click again to switch to it )
         </v-btn>
         <v-btn
-          color="primary"
+          color="secondary"
           @click="next"
         >
           Continue
@@ -38,7 +38,7 @@
 
       <v-stepper-content step="2">
         <v-btn
-          color="primary"
+          color="secondary"
           @click="next"
         >
           Continue
@@ -55,19 +55,29 @@
         :complete="polydogeStepper > 3"
         step="3"
       >
-        Swap BNB for ELK
+        Swap BNB to ELK
       </v-stepper-step>
 
       <v-stepper-content step="3">
+        <v-btn
+          v-if="$vuetify.breakpoint.mobile"
+          class="ma-2"
+          color="primary"
+          target="_blank"
+          href="https://app.elk.finance/#/swap?inputCurrency=BNB&outputCurrency=ELK"
+        >
+          Swap BNB to ELK
+        </v-btn>
         <v-card
+          v-else-if="polydogeStepper == 3"
           color="grey lighten-1"
           class="mb-12"
           height="860px"
         >
-          <iframe v-if="polydogeStepper == 3" ref="bnbElk" width="100%" height="100%" seamless src="https://app.elk.finance/#/swap?inputCurrency=BNB&outputCurrency=ELK"></iframe>
+          <iframe ref="bnbElk" width="100%" height="100%" seamless src="https://app.elk.finance/#/swap?inputCurrency=BNB&outputCurrency=ELK"></iframe>
         </v-card>
         <v-btn
-          color="primary"
+          color="secondary"
           @click="next"
         >
           Continue
@@ -76,7 +86,7 @@
           text
           @click="back"
         >
-          Cancel
+          Back
         </v-btn>
       </v-stepper-content>
 
@@ -89,15 +99,25 @@
       <v-stepper-content step="4">
         <p>Select <b>Polygon</b> as target chain</p>
         <p>Select "Swap $ELK 1 for gas" if you don't have any MATIC on Polygon</p>
+        <v-btn
+          v-if="$vuetify.breakpoint.mobile"
+          class="ma-2"
+          color="primary"
+          target="_blank"
+          href="https://app.elk.finance/#/elknet"
+        >
+          Move Elk from BSC to Polygon
+        </v-btn>
         <v-card
+          v-else-if="polydogeStepper == 4"
           color="grey lighten-1"
           class="mb-12"
           height="1100px"
         >
-          <iframe v-if="polydogeStepper == 4" width="100%" height="100%" seamless src="https://app.elk.finance/#/elknet"></iframe>
+          <iframe width="100%" height="100%" seamless src="https://app.elk.finance/#/elknet"></iframe>
         </v-card>
         <v-btn
-          color="primary"
+          color="secondary"
           @click="next"
         >
           Continue
@@ -106,7 +126,7 @@
           text
           @click="back"
         >
-          Cancel
+          Back
         </v-btn>
       </v-stepper-content>
 
@@ -118,13 +138,13 @@
           class="ma-2"
           :loading="!!loadingStatus.MATIC"
           :disabled="!!loadingStatus.MATIC"
-          color="secondary"
+          color="primary"
           @click="addPolygon"
         >
           Add Polygon to Metamask
         </v-btn>
         <v-btn
-          color="primary"
+          color="secondary"
           @click="next"
         >
           Continue
@@ -133,7 +153,7 @@
           text
           @click="back"
         >
-          Cancel
+          Back
         </v-btn>
       </v-stepper-content>
 
@@ -141,18 +161,28 @@
         Finally we can buy Polydoge
       </v-stepper-step>
       <v-stepper-content step="6">
+        <v-btn
+          v-if="$vuetify.breakpoint.mobile"
+          class="ma-2"
+          color="primary"
+          target="_blank"
+          href="https://app.elk.finance/#/swap?inputCurrency=ELK&outputCurrency=0x8A953CfE442c5E8855cc6c61b1293FA648BAE472"
+        >
+          Buy Polydoge! NO SELL! NEVER SELL!
+        </v-btn>
         <v-card
+          v-else-if="polydogeStepper == 6"
           color="grey lighten-1"
           class="mb-12"
           height="860px"
         >
-          <iframe v-if="polydogeStepper == 6" width="100%" height="100%" seamless src="https://app.elk.finance/#/swap?inputCurrency=ELK&outputCurrency=0x8A953CfE442c5E8855cc6c61b1293FA648BAE472"></iframe>
+          <iframe width="100%" height="100%" seamless src="https://app.elk.finance/#/swap?inputCurrency=ELK&outputCurrency=0x8A953CfE442c5E8855cc6c61b1293FA648BAE472"></iframe>
         </v-card>
         <v-btn
           text
           @click="back"
         >
-          Cancel
+          Back
         </v-btn>
       </v-stepper-content>
     </v-stepper>
