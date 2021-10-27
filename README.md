@@ -1,4 +1,4 @@
-# metamask-network-helper
+# bnb-to-polydoge
 
 ## Project setup
 ```

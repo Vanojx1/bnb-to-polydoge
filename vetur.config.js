@@ -4,6 +4,6 @@ module.exports = {
   // **optional** default: `[{ root: './' }]`
   // support monorepos
   projects: [
-    './Misc/metamask-network-helper', // Shorthand for specifying only the project root location
+    './Misc/bnb-to-polydoge', // Shorthand for specifying only the project root location
   ]
 }
