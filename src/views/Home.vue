@@ -1,6 +1,15 @@
 <template>
   <v-container fluid>
+    <v-alert
+      v-if="!web3"
+      border="top"
+      color="red lighten-2"
+      dark
+    >
+      Open this page from the Metamask browser or with the Metamask extension installed!
+    </v-alert>
     <v-stepper
+      v-else
       v-model="polydogeStepper"
       vertical
     >
@@ -237,6 +246,11 @@ export default {
       this.loadingStatus[network.nativeCurrency.name] = true;
       await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [network] });
       this.loadingStatus[network.nativeCurrency.name] = false;
+    },
+  },
+  computed: {
+    web3() {
+      return !!window.web3;
     },
   },
 };
