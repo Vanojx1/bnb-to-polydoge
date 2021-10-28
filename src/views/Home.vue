@@ -205,7 +205,11 @@ export default {
     return {
       polydogeStepper: 1,
       loadingStatus: {},
+      web3: false,
     };
+  },
+  mounted() {
+    this.web3 = !!window.web3;
   },
   methods: {
     next() {
@@ -246,11 +250,6 @@ export default {
       this.loadingStatus[network.nativeCurrency.name] = true;
       await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [network] });
       this.loadingStatus[network.nativeCurrency.name] = false;
-    },
-  },
-  computed: {
-    web3() {
-      return !!window.web3;
     },
   },
 };
