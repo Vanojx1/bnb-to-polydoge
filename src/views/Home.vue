@@ -199,6 +199,8 @@
 </template>
 
 <script>
+import Web3 from 'web3';
+
 export default {
   name: 'Home',
   data() {
@@ -208,10 +210,18 @@ export default {
       web3: false,
     };
   },
-  mounted() {
-    this.web3 = !!window.web3;
+  async mounted() {
+    this.web3 = await this.checkWeb3();
   },
   methods: {
+    async checkWeb3() {
+      if (window.web3) return true;
+      if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        return true;
+      }
+      return false;
+    },
     next() {
       this.polydogeStepper += 1;
     },
