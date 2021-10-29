@@ -10,7 +10,7 @@
     </v-alert>
     <v-stepper
       v-else
-      v-model="polydogeStepper"
+      :value="polydogeStepper"
       vertical
     >
       <v-stepper-step
@@ -69,10 +69,10 @@
 
       <v-stepper-content step="3">
         <v-btn
-          v-if="$vuetify.breakpoint.mobile"
+          v-if="isMobile"
           class="ma-2"
           color="primary"
-          target="_blank"
+          target="_parent"
           href="https://app.elk.finance/#/swap?inputCurrency=BNB&outputCurrency=ELK"
         >
           Swap BNB to ELK
@@ -109,10 +109,10 @@
         <p>Select <b>Polygon</b> as target chain</p>
         <p>Select "Swap $ELK 1 for gas" if you don't have any MATIC on Polygon</p>
         <v-btn
-          v-if="$vuetify.breakpoint.mobile"
+          v-if="isMobile"
           class="ma-2"
           color="primary"
-          target="_blank"
+          target="_parent"
           href="https://app.elk.finance/#/elknet"
         >
           Move Elk from BSC to Polygon
@@ -171,10 +171,10 @@
       </v-stepper-step>
       <v-stepper-content step="6">
         <v-btn
-          v-if="$vuetify.breakpoint.mobile"
+          v-if="isMobile"
           class="ma-2"
           color="primary"
-          target="_blank"
+          target="_parent"
           href="https://app.elk.finance/#/swap?inputCurrency=ELK&outputCurrency=0x8A953CfE442c5E8855cc6c61b1293FA648BAE472"
         >
           Buy Polydoge! NO SELL! NEVER SELL!
@@ -205,13 +205,13 @@ export default {
   name: 'Home',
   data() {
     return {
-      polydogeStepper: 1,
       loadingStatus: {},
       web3: false,
     };
   },
   async mounted() {
     this.web3 = await this.checkWeb3();
+    if (![1, 2, 3, 4, 5, 6].includes(this.polydogeStepper)) this.$router.replace('/step-1');
   },
   methods: {
     async checkWeb3() {
@@ -223,10 +223,10 @@ export default {
       return false;
     },
     next() {
-      this.polydogeStepper += 1;
+      this.$router.replace(`/step-${this.polydogeStepper + 1}`);
     },
     back() {
-      this.polydogeStepper -= 1;
+      this.$router.replace(`/step-${this.polydogeStepper - 1}`);
     },
     addPolygon() {
       const network = {
@@ -260,6 +260,14 @@ export default {
       this.loadingStatus[network.nativeCurrency.name] = true;
       await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [network] });
       this.loadingStatus[network.nativeCurrency.name] = false;
+    },
+  },
+  computed: {
+    isMobile() {
+      return this.$vuetify.breakpoint.mobile;
+    },
+    polydogeStepper() {
+      return parseInt(this.$route.path.replace('/step-', ''), 10);
     },
   },
 };

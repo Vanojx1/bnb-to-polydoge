@@ -6,9 +6,13 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/step-*',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '*',
+    redirect: '/step-1',
   },
 ];
 
